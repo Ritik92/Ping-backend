@@ -55,9 +55,17 @@ function updateUserList() {
 }
 
 server.on('upgrade', (request, socket, head) => {
-  wss.handleUpgrade(request, socket, head, (ws) => {
-    wss.emit('connection', ws, request);
-  });
+  // Validate origin here if needed
+  const origin = request.headers.origin;
+  // Allow connections only from specified origins
+  if (origin === 'https://frontend-ceoe-mp37qtrq9-ritik92s-projects.vercel.app') {
+    wss.handleUpgrade(request, socket, head, (ws) => {
+      wss.emit('connection', ws, request);
+    });
+  } else {
+    socket.destroy();
+    console.log(`WebSocket connection rejected: Origin ${origin} not allowed`);
+  }
 });
 
 wss.on('connection', (ws: WebSocket) => {
