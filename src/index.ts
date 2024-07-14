@@ -58,7 +58,7 @@ server.on('upgrade', (request, socket, head) => {
   // Validate origin here if needed
   const origin = request.headers.origin;
   // Allow connections only from specified origins
-  if (origin === 'https://frontend-ceoe-mp37qtrq9-ritik92s-projects.vercel.app') {
+  if (origin === 'https://frontend-ceoe.vercel.app') {
     wss.handleUpgrade(request, socket, head, (ws) => {
       wss.emit('connection', ws, request);
     });
